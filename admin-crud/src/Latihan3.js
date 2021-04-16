@@ -3,10 +3,6 @@ import React, { useState } from "react";
 //import firebase
 import { db } from "./firebase";
 
-//setting ini jika menggunakan emulator firestore
-//comment jika mau langsung koneksi ke cloud firebase
-//.settings({ host: "localhost:8080", ssl: false });
-
 function Latihan3() {
   //state
   const [nmCollection, setNmCollection] = useState("");
@@ -80,7 +76,7 @@ function Latihan3() {
 
   const getAllCol = () => {
     if (nmCollection === "") return console.log("Nama Koleksi Kosong");
-    console.log("Get All Data Collection", nmCollection);
+    console.log("Get Once All Data Collection", nmCollection);
     db.collection(nmCollection)
       .get()
       .then((firecol) => {
@@ -94,10 +90,70 @@ function Latihan3() {
       .catch((error) => console.error("Error Get Data :", error));
   };
 
+  const getAllColSnapshot = () => {
+    if (nmCollection === "") return console.log("Nama Koleksi Kosong");
+    console.log("Get Snapshot All Data Collection", nmCollection);
+    db.collection(nmCollection).onSnapshot((firecol) => {
+      const data = firecol.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log("Get All Data Collection :", data);
+      setDataCollection(data);
+    });
+  };
+
+  const getAllColSnapshotPush = () => {
+    if (nmCollection === "") return console.log("Nama Koleksi Kosong");
+    console.log("Get Snapshot All Data Collection", nmCollection);
+    db.collection(nmCollection).onSnapshot((firecol) => {
+      let data = [];
+      firecol.forEach((doc) => {
+        data.push({
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+      console.log("Get All Data Collection :", data);
+      setDataCollection(data);
+    });
+  };
   const getDok = () => {
     if (nmCollection === "") return console.log("Nama Koleksi Kosong");
     if (nmDokumen === "") return console.log("Nama Dokumen Kosong");
-    console.log("Get Dokumen", nmDokumen);
+    console.log("Get Dokumen", nmCollection);
+    db.collection(nmCollection)
+      .doc(nmDokumen)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          console.log("Document data:", doc.data());
+          setDataCollection(doc.data());
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      })
+      .catch((error) => {
+        console.log("Error getting document:", error);
+      });
+  };
+
+  const getDokSnapshot = () => {
+    if (nmCollection === "") return console.log("Nama Koleksi Kosong");
+    if (nmDokumen === "") return console.log("Nama Dokumen Kosong");
+    console.log("Get Dokumen", nmCollection);
+    db.collection(nmCollection)
+      .doc(nmDokumen)
+      .onSnapshot((doc) => {
+        if (doc.exists) {
+          console.log("Document data:", doc.data());
+          setDataCollection(doc.data());
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      });
   };
 
   return (
@@ -113,7 +169,9 @@ function Latihan3() {
           placeholder="Isi Nama Collection"
           onChange={(e) => setNmCollection(e.target.value)}
         />{" "}
-        <button onClick={getAllCol}>LIHAT COLL</button>
+        <button onClick={getAllCol}>LIHAT COLL</button>{" "}
+        <button onClick={getAllColSnapshot}>SNAPSHOT COLL1</button>{" "}
+        <button onClick={getAllColSnapshotPush}>SNAPSHOT COLL2</button>
         <br></br>
         <br></br>
         <label htmlFor="nmDokumen">Nama Dokumen :</label>
@@ -124,8 +182,8 @@ function Latihan3() {
           placeholder="Isi Kolom1"
           onChange={(e) => setNmDokumen(e.target.value)}
         />{" "}
-        <button onClick={getDok}>LIHAT DOK</button>
-        <br></br>
+        <button onClick={getDok}>LIHAT DOK</button>{" "}
+        <button onClick={getDokSnapshot}>SNAPSHOT DOK</button> <br></br>
         <br></br>
         <label htmlFor="kolom1">Kolom1 :</label>
         <input
