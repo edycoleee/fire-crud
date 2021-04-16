@@ -13,6 +13,7 @@ function Latihan1() {
   const [nmDokumen, setNmDokumen] = useState("");
   const [kolom1, setKolom1] = useState("");
   const [kolom2, setKolom2] = useState("");
+  const [kolom3, setKolom3] = useState("");
   //state untuk data dari hasil pembacaan
 
   //button simpan fuction
@@ -34,40 +35,87 @@ function Latihan1() {
       });
   }
 
+  function onSimpanDokDgIdMerge() {
+    if (nmCollection === "") return console.log("Nama Koleksi Kosong");
+    if (nmDokumen === "") return console.log("Nama Dokumen Kosong");
+    console.log(nmCollection, nmDokumen, kolom1, kolom2);
+    db.collection(nmCollection)
+      .doc(nmDokumen)
+      .set(
+        {
+          kolom3: kolom3,
+        },
+        { merge: true }
+      )
+      .then(() => {
+        console.log("Document successfully written!");
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+      });
+  }
   return (
     <div>
-      <h3>Latihan1</h3>
-      <h4>Nama Collection</h4>
-      <input
-        type="text"
-        name="nmCollection"
-        placeholder="Isi Nama Collection"
-        onChange={(e) => setNmCollection(e.target.value)}
-      />
-      <h4>Nama Dokumen</h4>
-      <input
-        type="text"
-        name="nmDokumen"
-        placeholder="Isi Kolom1"
-        onChange={(e) => setNmDokumen(e.target.value)}
-      />
-      <h4>Kolom1</h4>
-      <input
-        type="text"
-        name="kolom1"
-        placeholder="Isi Kolom1"
-        onChange={(e) => setKolom1(e.target.value)}
-      />
-      <h4>Kolom2</h4>
-      <input
-        type="text"
-        name="kolom2"
-        placeholder="Isi Kolom2"
-        onChange={(e) => setKolom2(e.target.value)}
-      />
+      <h3>Latihan 1 Menambah Data dengan Collection dan ID Dokumen</h3>
+      <fieldset>
+        <legend>Set Data :</legend>
+        <label htmlFor="nmCollection">Nama Collection :</label>
+        <input
+          style={{ marginLeft: "1em" }}
+          type="text"
+          name="nmCollection"
+          placeholder="Isi Nama Collection"
+          onChange={(e) => setNmCollection(e.target.value)}
+        />
+        <br></br>
+        <br></br>
+        <label htmlFor="nmDokumen">Nama Dokumen :</label>
+        <input
+          style={{ marginLeft: "1em" }}
+          type="text"
+          name="nmDokumen"
+          placeholder="Isi Kolom1"
+          onChange={(e) => setNmDokumen(e.target.value)}
+        />
+        <br></br>
+        <br></br>
+        <label htmlFor="kolom1">Kolom1 :</label>
+        <input
+          style={{ marginLeft: "1em" }}
+          type="text"
+          name="kolom1"
+          placeholder="Isi Kolom1"
+          onChange={(e) => setKolom1(e.target.value)}
+        />
+        <br></br>
+        <br></br>
+        <label htmlFor="kolom2">Kolom2 :</label>
+        <input
+          style={{ marginLeft: "1em" }}
+          type="text"
+          name="kolom2"
+          placeholder="Isi Kolom2"
+          onChange={(e) => setKolom2(e.target.value)}
+        />
+        <br></br>
+        <br></br>
+        <button onClick={onSimpanDokDgId}>SIMPAN DOK DG ID</button>
+      </fieldset>
       <br></br>
-      <br></br>
-      <button onClick={onSimpanDokDgId}>SIMPAN DOK DG ID</button>
+      <fieldset>
+        <legend>Set Data dg merge: true </legend>
+        <label htmlFor="kolom3">Kolom3 :</label>
+        <input
+          style={{ marginLeft: "1em" }}
+          type="text"
+          name="kolom3"
+          placeholder="Isi Kolom3"
+          onChange={(e) => setKolom3(e.target.value)}
+        />
+        <br></br>
+        <br></br>
+        <button onClick={onSimpanDokDgIdMerge}>SIMPAN DOK DG ID MERGE</button>
+      </fieldset>
     </div>
   );
 }
