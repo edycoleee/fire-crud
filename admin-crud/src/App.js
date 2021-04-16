@@ -1,9 +1,10 @@
 //App.js
 
 //import Latihan1 from "./Latihan1";
-// import Latihan2 from "./Latihan2";
+//import Latihan2 from "./Latihan2";
 //import Latihan3 from "./Latihan3";
-import Latihan4 from "./Latihan4";
+//import Latihan4 from "./Latihan4";
+import Latihan5 from "./Latihan5";
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
       {/* <Latihan1 /> */}
       {/* <Latihan2 /> */}
       {/* <Latihan3 /> */}
-      <Latihan4 />
+      {/* <Latihan4 /> */}
+      <Latihan5 />
     </div>
   );
 }
