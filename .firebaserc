@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "coba-crud6"
+  },
+  "targets": {
+    "coba-crud6": {
+      "hosting": {
+        "admin": [
+          "admin-crud6"
+        ],
+        "coba": [
+          "coba-crud6"
+        ]
+      }
+    }
+  }
+}
