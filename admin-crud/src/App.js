@@ -1,13 +1,15 @@
 //App.js
 
-import Latihan1 from "./Latihan1";
+//import Latihan1 from "./Latihan1";
+import Latihan2 from "./Latihan2";
 
 function App() {
   return (
     <div>
       <h1>ADMIN SITE</h1>
       <br></br>
-      <Latihan1 />
+      {/* <Latihan1 /> */}
+      <Latihan2 />
     </div>
   );
 }
