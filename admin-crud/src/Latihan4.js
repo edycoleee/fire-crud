@@ -1,4 +1,4 @@
-//src/Latihan3.js
+//src/Latihan4.js
 import React, { useState } from "react";
 //import firebase
 import { db } from "./firebase";
@@ -7,7 +7,7 @@ import { db } from "./firebase";
 //comment jika mau langsung koneksi ke cloud firebase
 //settings({ host: "localhost:8080", ssl: false });
 
-function Latihan3() {
+function Latihan4() {
   //state
   const [nmCollection, setNmCollection] = useState("");
   const [nmDokumen, setNmDokumen] = useState("");
@@ -130,13 +130,8 @@ function Latihan3() {
       .doc(nmDokumen)
       .get()
       .then((doc) => {
-        if (doc.exists) {
-          console.log("Document data:", doc.data());
-          setDataCollection(doc.data());
-        } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
-        }
+        if (!doc.exists) return console.log("No such document!");
+        return setDataCollection([{ id: doc.id, ...doc.data() }]);
       })
       .catch((error) => {
         console.log("Error getting document:", error);
@@ -150,19 +145,14 @@ function Latihan3() {
     db.collection(nmCollection)
       .doc(nmDokumen)
       .onSnapshot((doc) => {
-        if (doc.exists) {
-          console.log("Document data:", doc.data());
-          setDataCollection(doc.data());
-        } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
-        }
+        if (!doc.exists) return console.log("No such document!");
+        return setDataCollection([{ id: doc.id, ...doc.data() }]);
       });
   };
 
   return (
     <div>
-      <h3>Latihan 3 Melihat Data Sekali</h3>
+      <h3>Latihan 4 Menampilkan Tabel</h3>
       <fieldset>
         <legend>Set Data :</legend>
         <label htmlFor="nmCollection">Nama Collection :</label>
@@ -232,8 +222,29 @@ function Latihan3() {
         <legend>Data Firestore </legend>
         {JSON.stringify(dataCollection)}
       </fieldset>
+      <fieldset>
+        <legend>Table Firestore </legend>
+        <table>
+          <thead>
+            <tr>
+              <th>kolom 1</th>
+              <th>kolom 2</th>
+              <th>kolom 3</th>
+            </tr>
+          </thead>
+          <tbody>
+            {dataCollection?.map((row) => (
+              <tr key={row.id}>
+                <td>{row.kolom1}</td>
+                <td>{row.kolom2}</td>
+                <td>{row.kolom3}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </fieldset>
     </div>
   );
 }
 
-export default Latihan3;
+export default Latihan4;

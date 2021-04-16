@@ -5,7 +5,7 @@ import { db } from "./firebase";
 
 //setting ini jika menggunakan emulator firestore
 //comment jika mau langsung koneksi ke cloud firebase
-//.settings({ host: "localhost:8080", ssl: false });
+//settings({ host: "localhost:8080", ssl: false });
 
 function Latihan1() {
   //state
