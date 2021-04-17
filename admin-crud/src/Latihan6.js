@@ -86,7 +86,6 @@ function Latihan6() {
     console.log("Edit Dok :", row);
     //memasukkan data kedalam state edit
     setEdtNmDokumen(row.id);
-    setKolom3(row.kolom3)
   }
 
   //button utk delete data
@@ -115,6 +114,33 @@ function Latihan6() {
       });
   }
 
+  //button utk lihat jam server
+  function onAddTime() {
+    db.collection(nmCollection)
+      .doc(edtnmDokumen)
+      .set(
+        {
+          createdAt: Firebase.firestore.FieldValue.serverTimestamp(),
+        },
+        { merge: true }
+      )
+      .then(() => {
+        getAllCol();
+        console.log("Document successfully written!");
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+      });
+  }
+
+  function onConversiTime(timestamp) {
+    if (!timestamp) return console.log("kosong");
+    console.log(timestamp, timestamp.seconds, timestamp.nanoseconds);
+    const newDate = new Date(
+      timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
+    );
+    return console.log(newDate);
+  }
   return (
     <div>
       <h3>Latihan 6 Latihan Add Delete KOlom dalam Dok</h3>
@@ -179,6 +205,12 @@ function Latihan6() {
                 <td>
                   <button onClick={() => onDeleteDok(row.id)}>DELETE</button>
                 </td>
+                <td>{JSON.stringify(row.createdAt)}</td>
+                <td>
+                  <button onClick={() => onConversiTime(row.createdAt)}>
+                    WAKTU
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -196,13 +228,21 @@ function Latihan6() {
           type="text"
           name="kolom3"
           placeholder="Isi Kolom3"
-          value={kolom3 || ""}
           onChange={(e) => setKolom3(e.target.value)}
         />
         <br></br>
         <br></br>
         <button onClick={onSimpanDokDgIdMerge}>ADD FIELD Kolom3</button>{" "}
         <button onClick={onDeleteField}>DELETE FIELD Kolom3</button>
+        <br></br>
+        <br></br>
+        <button onClick={onAddTime}>Add Jam Server CreatedAt</button>
+      </fieldset>
+      <br></br>
+      <br></br>
+      <fieldset>
+        <legend>Data Firestore </legend>
+        {JSON.stringify(dataCollection)}
       </fieldset>
     </div>
   );
