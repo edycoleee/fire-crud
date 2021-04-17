@@ -128,6 +128,18 @@ function Latihan5() {
   //button utk delte data
   function onDeleteDok(id_del) {
     console.log("Delete id dok :", id_del);
+    if (nmCollection === "") return console.log("Nama Koleksi Kosong");
+    if (!id_del) return console.log("Nama Dokumen Kosong");
+    console.log(nmCollection, id_del);
+    db.collection(nmCollection)
+      .doc(id_del)
+      .delete()
+      .then(() => {
+        console.log("Deleted doc ");
+      })
+      .catch((error) => {
+        console.error("Error update document: ", error);
+      });
   }
 
   return (
