@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db, Firebase } from "./firebase";
+import Latihan8 from "./Latihan8";
 
 //setting ini jika menggunakan emulator firestore
 //comment jika mau langsung koneksi ke cloud firebase
@@ -415,6 +416,7 @@ function Latihan7() {
       )}
       {JSON.stringify(tglDonasi)}
       <br></br>
+      <Latihan8 setStAlert={setStAlert} setDataCollection={setDataCollection} />
     </div>
   );
 }
