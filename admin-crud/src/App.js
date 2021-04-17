@@ -5,7 +5,8 @@
 //import Latihan3 from "./Latihan3";
 //import Latihan4 from "./Latihan4";
 //import Latihan5 from "./Latihan5";
-import Latihan6 from "./Latihan6";
+//import Latihan6 from "./Latihan6";
+import Latihan7 from "./Latihan7";
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
       {/* <Latihan3 /> */}
       {/* <Latihan4 /> */}
       {/* <Latihan5 /> */}
-      <Latihan6 />
+      {/* <Latihan6 /> */}
+      <Latihan7 />
     </div>
   );
 }
