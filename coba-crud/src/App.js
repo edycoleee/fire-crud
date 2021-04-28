@@ -1,9 +1,14 @@
-//App.js 
+//App.js
+import React from "react";
+//import Latihan2 from "./Latihan2";
+import Latihan3 from "./Latihan3";
 
 function App() {
   return (
     <div>
-      <h1>PUBLIC SITE</h1>
+      <h2>Coba Site</h2>
+      {/* <Latihan2 /> */}
+      <Latihan3 />
     </div>
   );
 }
